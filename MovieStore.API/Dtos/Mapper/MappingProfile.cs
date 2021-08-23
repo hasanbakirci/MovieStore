@@ -14,6 +14,9 @@ namespace MovieStore.API.Dtos.Mapper
 
             CreateMap<CreateActorRequest, Actor>();
             CreateMap<Actor,ActorDto>();
+
+            CreateMap<Actor,FilmsOfActorsDto>();
+            CreateMap<Film,ActorsOfFilmsDto>();
         }
         
     }

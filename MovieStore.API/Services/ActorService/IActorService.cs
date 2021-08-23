@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.ActorRequest;
-using MovieStore.API.Models;
+
 
 namespace MovieStore.API.Services.ActorService
 {
@@ -14,5 +14,6 @@ namespace MovieStore.API.Services.ActorService
         Task<ActorDto> Get(Guid id);
         Task Delete(Guid id);
         Task Update(Guid id, UpdateActorRequest request);
+        IEnumerable<ActorsOfFilmsDto> GetAllFilms(Guid actorId);
     }
 }

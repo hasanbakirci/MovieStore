@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.ActorRequest;
+using MovieStore.API.Dtos.Request.FilmRequest;
 using MovieStore.API.Models;
 using MovieStore.API.Repository.ActorRepository;
 
@@ -38,6 +39,11 @@ namespace MovieStore.API.Services.ActorService
         public async Task<IEnumerable<ActorDto>> GetAll()
         {
             return _mapper.Map<IEnumerable<ActorDto>>(await _actorRepository.GetAll());
+        }
+
+        public IEnumerable<ActorsOfFilmsDto> GetAllFilms(Guid actorId)
+        {  
+            return _mapper.Map<IEnumerable<ActorsOfFilmsDto>>(_actorRepository.GetAllFilms(actorId));
         }
 
         public async Task Update(Guid id, UpdateActorRequest request)

@@ -54,7 +54,7 @@ namespace MovieStore.API.Controllers
             return Ok();
         }
         [HttpGet("/Actor")]
-        public ActionResult<IEnumerable<Actor>> GetAllActor(Guid filmId){
+        public ActionResult<IEnumerable<ActorsOfFilmsDto>> GetAllActor(Guid filmId){
             
             return Ok(_filmService.GetAllActors(filmId));
         }

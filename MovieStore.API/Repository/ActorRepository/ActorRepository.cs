@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MovieStore.API.Models;
@@ -38,6 +39,12 @@ namespace MovieStore.API.Repository.ActorRepository
         public async Task<IEnumerable<Actor>> GetAll()
         {
             return await _context.Actors.ToListAsync();
+        }
+
+        public IEnumerable<Film> GetAllFilms(Guid actorId)
+        {
+            var result = _context.Films.Where(item => item.Actors.Any(x => x.ActorId == actorId));
+            return result;
         }
 
         public async Task Update(Guid id, Actor actor)

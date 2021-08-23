@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.ActorRequest;
-using MovieStore.API.Models;
 using MovieStore.API.Services.ActorService;
 
 namespace MovieStore.API.Controllers
@@ -48,6 +47,10 @@ namespace MovieStore.API.Controllers
         public async Task<ActionResult> Update(Guid id, UpdateActorRequest request){
             await _actorService.Update(id,request);
             return Ok();
+        }
+        [HttpGet("/Film")]
+        public ActionResult<IEnumerable<FilmsOfActorsDto>> GetAllFilm(Guid actorId){
+            return Ok(_actorService.GetAllFilms(actorId));
         }
     }
 }
