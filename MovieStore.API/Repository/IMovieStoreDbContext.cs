@@ -8,6 +8,8 @@ namespace MovieStore.API.Repository
     public interface IMovieStoreDbContext
     {
         DbSet<Film> Films {get; init;}
+        DbSet<Actor> Actors {get; init;}
+        DbSet<FilmActor> FilmActors { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

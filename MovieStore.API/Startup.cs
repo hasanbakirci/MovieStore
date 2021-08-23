@@ -14,7 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MovieStore.API.Repository;
+using MovieStore.API.Repository.ActorRepository;
 using MovieStore.API.Repository.FilmRepository;
+using MovieStore.API.Services.ActorService;
 using MovieStore.API.Services.FilmService;
 
 namespace MovieStore.API
@@ -36,6 +38,9 @@ namespace MovieStore.API
 
             services.AddScoped<IFilmRepository, FilmRepository>();
             services.AddScoped<IFilmService, FilmService>();
+
+            services.AddScoped<IActorRepository, ActorRepository>();
+            services.AddScoped<IActorService, ActorService>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

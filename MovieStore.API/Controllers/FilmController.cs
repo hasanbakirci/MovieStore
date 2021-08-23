@@ -48,5 +48,15 @@ namespace MovieStore.API.Controllers
             await _filmService.Update(id,request);
             return Ok();
         }
+        [HttpPost("/Actor")]
+        public async Task<ActionResult> AddActor(Guid filmId,Guid actorId){
+            await _filmService.AddActor(filmId,actorId);
+            return Ok();
+        }
+        [HttpGet("/Actor")]
+        public ActionResult<IEnumerable<Actor>> GetAllActor(Guid filmId){
+            
+            return Ok(_filmService.GetAllActors(filmId));
+        }
     }
 }

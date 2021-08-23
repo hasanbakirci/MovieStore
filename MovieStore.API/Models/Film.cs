@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MovieStore.API.Models
 {
@@ -9,7 +10,7 @@ namespace MovieStore.API.Models
         public DateTime PublishDate { get; set; } = DateTime.Now;
         public int GenreId { get; set; }
         public double  Price { get; set; }
-        public int ActorId { get; set; }
-        public int ProducerId { get; set; }
+        public ICollection<FilmActor> Actors { get; set; }
+    
     }
 }
