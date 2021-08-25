@@ -11,6 +11,7 @@ namespace MovieStore.API.Models
         public int GenreId { get; set; }
         public double  Price { get; set; }
         public ICollection<FilmActor> Actors { get; set; }
+        public ICollection<FilmDirector> Directors { get; set; }
     
     }
 }

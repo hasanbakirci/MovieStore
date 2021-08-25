@@ -1,5 +1,6 @@
 using AutoMapper;
 using MovieStore.API.Dtos.Request.ActorRequest;
+using MovieStore.API.Dtos.Request.DirectorRequest;
 using MovieStore.API.Dtos.Request.FilmRequest;
 using MovieStore.API.Models;
 
@@ -15,8 +16,14 @@ namespace MovieStore.API.Dtos.Mapper
             CreateMap<CreateActorRequest, Actor>();
             CreateMap<Actor,ActorDto>();
 
-            CreateMap<Actor,FilmsOfActorsDto>();
-            CreateMap<Film,ActorsOfFilmsDto>();
+            CreateMap<Film,FilmsOfActorsDto>();
+            CreateMap<Actor,ActorsOfFilmsDto>();
+
+            CreateMap<CreateDirectorRequest,Director>();
+            CreateMap<Director,DirectorDto>();
+
+            CreateMap<Film,FilmsOfDirectorsDto>();
+            CreateMap<Director,DirectorsOfFilmsDto>();
         }
         
     }

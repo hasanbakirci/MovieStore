@@ -1,8 +1,6 @@
-using System;
-
 namespace MovieStore.API.Dtos
 {
-    public class FilmsOfActorsDto
+    public class FilmsOfDirectorsDto
     {
         public string Name { get; set; }
     }

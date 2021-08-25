@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieStore.API.Migrations
 {
     [DbContext(typeof(MovieStoreDbContext))]
-    [Migration("20210823165833_FilmActor")]
-    partial class FilmActor
+    [Migration("20210825083422_MovieStore")]
+    partial class MovieStore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,26 @@ namespace MovieStore.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Actors");
+                });
+
+            modelBuilder.Entity("MovieStore.API.Models.Director", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Directors");
                 });
 
             modelBuilder.Entity("MovieStore.API.Models.Film", b =>
@@ -82,6 +102,24 @@ namespace MovieStore.API.Migrations
                     b.ToTable("FilmActors");
                 });
 
+            modelBuilder.Entity("MovieStore.API.Models.FilmDirector", b =>
+                {
+                    b.Property<Guid>("FilmId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DirectorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("FilmId", "DirectorId");
+
+                    b.HasIndex("DirectorId");
+
+                    b.ToTable("FilmDirectors");
+                });
+
             modelBuilder.Entity("MovieStore.API.Models.FilmActor", b =>
                 {
                     b.HasOne("MovieStore.API.Models.Actor", "Actor")
@@ -101,7 +139,31 @@ namespace MovieStore.API.Migrations
                     b.Navigation("Film");
                 });
 
+            modelBuilder.Entity("MovieStore.API.Models.FilmDirector", b =>
+                {
+                    b.HasOne("MovieStore.API.Models.Director", "Director")
+                        .WithMany("Films")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieStore.API.Models.Film", "Film")
+                        .WithMany("Directors")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Director");
+
+                    b.Navigation("Film");
+                });
+
             modelBuilder.Entity("MovieStore.API.Models.Actor", b =>
+                {
+                    b.Navigation("Films");
+                });
+
+            modelBuilder.Entity("MovieStore.API.Models.Director", b =>
                 {
                     b.Navigation("Films");
                 });
@@ -109,6 +171,8 @@ namespace MovieStore.API.Migrations
             modelBuilder.Entity("MovieStore.API.Models.Film", b =>
                 {
                     b.Navigation("Actors");
+
+                    b.Navigation("Directors");
                 });
 #pragma warning restore 612, 618
         }

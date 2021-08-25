@@ -58,5 +58,15 @@ namespace MovieStore.API.Controllers
             
             return Ok(_filmService.GetAllActors(filmId));
         }
+        [HttpPost("/Director")]
+        public async Task<ActionResult> AddDirector(Guid filmId,Guid directorId){
+            await _filmService.AddDirector(filmId,directorId);
+            return Ok();
+        }
+        [HttpGet("/Director")]
+        public ActionResult<IEnumerable<DirectorsOfFilmsDto>> GetAllDirectors(Guid filmId){
+            
+            return Ok(_filmService.GetAllDirectors(filmId));
+        }
     }
 }

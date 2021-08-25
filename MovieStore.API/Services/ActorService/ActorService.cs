@@ -41,9 +41,9 @@ namespace MovieStore.API.Services.ActorService
             return _mapper.Map<IEnumerable<ActorDto>>(await _actorRepository.GetAll());
         }
 
-        public IEnumerable<ActorsOfFilmsDto> GetAllFilms(Guid actorId)
+        public IEnumerable<FilmsOfActorsDto> GetAllFilms(Guid actorId)
         {  
-            return _mapper.Map<IEnumerable<ActorsOfFilmsDto>>(_actorRepository.GetAllFilms(actorId));
+            return _mapper.Map<IEnumerable<FilmsOfActorsDto>>(_actorRepository.GetAllFilms(actorId));
         }
 
         public async Task Update(Guid id, UpdateActorRequest request)

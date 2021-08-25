@@ -14,6 +14,6 @@ namespace MovieStore.API.Services.ActorService
         Task<ActorDto> Get(Guid id);
         Task Delete(Guid id);
         Task Update(Guid id, UpdateActorRequest request);
-        IEnumerable<ActorsOfFilmsDto> GetAllFilms(Guid actorId);
+        IEnumerable<FilmsOfActorsDto> GetAllFilms(Guid actorId);
     }
 }

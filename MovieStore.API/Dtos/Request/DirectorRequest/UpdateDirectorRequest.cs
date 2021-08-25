@@ -1,8 +1,6 @@
-using System;
-
-namespace MovieStore.API.Dtos
+namespace MovieStore.API.Dtos.Request.DirectorRequest
 {
-    public class ActorsOfFilmsDto
+    public class UpdateDirectorRequest
     {
         public string Name { get; set; }
         public string Surname { get; set; }

@@ -14,6 +14,8 @@ namespace MovieStore.API.Repository
         public DbSet<Film> Films { get; init; }
         public DbSet<Actor> Actors { get; init; }
         public DbSet<FilmActor> FilmActors { get; init; }
+        public DbSet<Director> Directors { get; set; }
+        public DbSet<FilmDirector> FilmDirectors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +31,20 @@ namespace MovieStore.API.Repository
             .HasOne(fa => fa.Actor)
             .WithMany(f => f.Films)
             .HasForeignKey(fa => fa.ActorId);
+
+            modelBuilder.Entity<FilmDirector>()
+            .HasKey(fd => new {fd.FilmId, fd.DirectorId});
+
+            modelBuilder.Entity<FilmDirector>()
+            .HasOne(fd => fd.Film)
+            .WithMany(f => f.Directors)
+            .HasForeignKey(fd => fd.FilmId);
+
+            modelBuilder.Entity<FilmDirector>()
+            .HasOne(fd => fd.Director)
+            .WithMany(f => f.Films)
+            .HasForeignKey(fd => fd.DirectorId);
+            
         }
 
     }

@@ -30,6 +30,11 @@ namespace MovieStore.API.Services.FilmService
             await _filmRepository.AddActor(filmId,actorId);
         }
 
+        public async Task AddDirector(Guid filmId, Guid directorId)
+        {
+            await _filmRepository.AddDirector(filmId,directorId);
+        }
+
         public async Task Delete(Guid id)
         {
             await _filmRepository.Delete(id);
@@ -45,14 +50,20 @@ namespace MovieStore.API.Services.FilmService
             return _mapper.Map<IEnumerable<FilmDto>>(await _filmRepository.GetAll());
         }
 
-        public IEnumerable<FilmsOfActorsDto> GetAllActors(Guid filmId)
+        public IEnumerable<ActorsOfFilmsDto> GetAllActors(Guid filmId)
         {
-            return _mapper.Map<IEnumerable<FilmsOfActorsDto>>(_filmRepository.GetAllActors(filmId));
+            return _mapper.Map<IEnumerable<ActorsOfFilmsDto>>(_filmRepository.GetAllActors(filmId));
+        }
+
+        public IEnumerable<DirectorsOfFilmsDto> GetAllDirectors(Guid filmId)
+        {
+            return _mapper.Map<IEnumerable<DirectorsOfFilmsDto>>(_filmRepository.GetAllDirectors(filmId));
         }
 
         public async Task Update(Guid id, UpdateFilmRequest request)
         {
             await _filmRepository.Update(id,_mapper.Map<Film>(request));
         }
+
     }
 }

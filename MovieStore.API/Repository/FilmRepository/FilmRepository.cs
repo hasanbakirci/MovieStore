@@ -69,5 +69,24 @@ namespace MovieStore.API.Repository.FilmRepository
             return result;
 
         }
+
+        public async Task AddDirector(Guid filmId, Guid directorId)
+        {
+            var film = _context.Films.Find(filmId);
+            var director = _context.Directors.Find(directorId);
+            if(film is null || director is null)
+                throw new InvalidOperationException("Hatalı giriş");
+            FilmDirector fd = new FilmDirector();
+            fd.FilmId = filmId;
+            fd.DirectorId = directorId;
+            _context.FilmDirectors.Add(fd);
+            await _context.SaveChangesAsync();
+        }
+
+        public IEnumerable<Director> GetAllDirectors(Guid filmId)
+        {
+            var result = _context.Directors.Where(item => item.Films.Any(x => x.FilmId == filmId));
+            return result;
+        }
     }
 }

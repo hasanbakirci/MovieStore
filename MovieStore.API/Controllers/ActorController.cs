@@ -48,8 +48,8 @@ namespace MovieStore.API.Controllers
             await _actorService.Update(id,request);
             return Ok();
         }
-        [HttpGet("/Film")]
-        public ActionResult<IEnumerable<FilmsOfActorsDto>> GetAllFilm(Guid actorId){
+        [HttpGet("/FilmsOfActor")]
+        public ActionResult<IEnumerable<FilmsOfActorsDto>> GetAllFilmsOfActor(Guid actorId){
             return Ok(_actorService.GetAllFilms(actorId));
         }
     }

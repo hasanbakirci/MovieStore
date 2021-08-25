@@ -13,6 +13,8 @@ namespace MovieStore.API.Repository.FilmRepository
         Task Delete(Guid id);
         Task Update(Guid id, Film film);
         Task AddActor(Guid filmId, Guid actorId);
+        Task AddDirector(Guid filmId, Guid directorId);
         IEnumerable<Actor> GetAllActors(Guid filmId);
+        IEnumerable<Director> GetAllDirectors(Guid filmId);
     }
 }

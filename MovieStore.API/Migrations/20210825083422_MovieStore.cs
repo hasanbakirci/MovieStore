@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MovieStore.API.Migrations
 {
-    public partial class FilmActor : Migration
+    public partial class MovieStore : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,20 @@ namespace MovieStore.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Actors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Directors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Surname = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Directors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,10 +75,40 @@ namespace MovieStore.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FilmDirectors",
+                columns: table => new
+                {
+                    FilmId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DirectorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilmDirectors", x => new { x.FilmId, x.DirectorId });
+                    table.ForeignKey(
+                        name: "FK_FilmDirectors_Directors_DirectorId",
+                        column: x => x.DirectorId,
+                        principalTable: "Directors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FilmDirectors_Films_FilmId",
+                        column: x => x.FilmId,
+                        principalTable: "Films",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FilmActors_ActorId",
                 table: "FilmActors",
                 column: "ActorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FilmDirectors_DirectorId",
+                table: "FilmDirectors",
+                column: "DirectorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -73,7 +117,13 @@ namespace MovieStore.API.Migrations
                 name: "FilmActors");
 
             migrationBuilder.DropTable(
+                name: "FilmDirectors");
+
+            migrationBuilder.DropTable(
                 name: "Actors");
+
+            migrationBuilder.DropTable(
+                name: "Directors");
 
             migrationBuilder.DropTable(
                 name: "Films");
