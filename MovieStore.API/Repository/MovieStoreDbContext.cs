@@ -16,6 +16,8 @@ namespace MovieStore.API.Repository
         public DbSet<FilmActor> FilmActors { get; init; }
         public DbSet<Director> Directors { get; set; }
         public DbSet<FilmDirector> FilmDirectors { get; set; }
+        public DbSet<Customer> Customers { get; set ; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

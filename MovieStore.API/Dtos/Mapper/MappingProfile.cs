@@ -1,7 +1,9 @@
 using AutoMapper;
 using MovieStore.API.Dtos.Request.ActorRequest;
+using MovieStore.API.Dtos.Request.CustomerRequest;
 using MovieStore.API.Dtos.Request.DirectorRequest;
 using MovieStore.API.Dtos.Request.FilmRequest;
+using MovieStore.API.Dtos.Request.OrderRequest;
 using MovieStore.API.Models;
 
 namespace MovieStore.API.Dtos.Mapper
@@ -24,6 +26,17 @@ namespace MovieStore.API.Dtos.Mapper
 
             CreateMap<Film,FilmsOfDirectorsDto>();
             CreateMap<Director,DirectorsOfFilmsDto>();
+
+            CreateMap<Customer,CustomerDto>();
+            CreateMap<CreateCustomerRequest,Customer>();
+
+            CreateMap<Order,OrderDto>()
+            .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Customer.Name))
+            .ForMember(dest => dest.FilmName, opt => opt.MapFrom(src => src.Film.Name))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Film.Price))
+            .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => src.Film.PublishDate));
+            CreateMap<CreateOrderRequest,Order>();
+
         }
         
     }

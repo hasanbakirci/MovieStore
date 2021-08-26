@@ -15,11 +15,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MovieStore.API.Repository;
 using MovieStore.API.Repository.ActorRepository;
+using MovieStore.API.Repository.CustomerRepository;
 using MovieStore.API.Repository.DirectorRepository;
 using MovieStore.API.Repository.FilmRepository;
+using MovieStore.API.Repository.OrderRepository;
 using MovieStore.API.Services.ActorService;
+using MovieStore.API.Services.CustomerService;
 using MovieStore.API.Services.DirectorService;
 using MovieStore.API.Services.FilmService;
+using MovieStore.API.Services.OrderService;
 
 namespace MovieStore.API
 {
@@ -46,6 +50,12 @@ namespace MovieStore.API
 
             services.AddScoped<IDirectorRepository, DirectorRepository>();
             services.AddScoped<IDirectorService, DirectorService>();
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerService, CustomerService>();
+
+            services.AddScoped<IOrderRepository,OrderRepository>();
+            services.AddScoped<IOrderService,OrderService>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

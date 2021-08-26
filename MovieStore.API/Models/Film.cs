@@ -12,6 +12,7 @@ namespace MovieStore.API.Models
         public double  Price { get; set; }
         public ICollection<FilmActor> Actors { get; set; }
         public ICollection<FilmDirector> Directors { get; set; }
+        public Order Order { get; set; }
     
     }
 }

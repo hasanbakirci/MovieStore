@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieStore.API.Migrations
 {
     [DbContext(typeof(MovieStoreDbContext))]
-    [Migration("20210825083422_MovieStore")]
-    partial class MovieStore
+    [Migration("20210825170408_Db")]
+    partial class Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,29 @@ namespace MovieStore.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Actors");
+                });
+
+            modelBuilder.Entity("MovieStore.API.Models.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("MovieStore.API.Models.Director", b =>
@@ -120,6 +143,31 @@ namespace MovieStore.API.Migrations
                     b.ToTable("FilmDirectors");
                 });
 
+            modelBuilder.Entity("MovieStore.API.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FilmId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("FilmId")
+                        .IsUnique();
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("MovieStore.API.Models.FilmActor", b =>
                 {
                     b.HasOne("MovieStore.API.Models.Actor", "Actor")
@@ -158,9 +206,33 @@ namespace MovieStore.API.Migrations
                     b.Navigation("Film");
                 });
 
+            modelBuilder.Entity("MovieStore.API.Models.Order", b =>
+                {
+                    b.HasOne("MovieStore.API.Models.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieStore.API.Models.Film", "Film")
+                        .WithOne("Order")
+                        .HasForeignKey("MovieStore.API.Models.Order", "FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Film");
+                });
+
             modelBuilder.Entity("MovieStore.API.Models.Actor", b =>
                 {
                     b.Navigation("Films");
+                });
+
+            modelBuilder.Entity("MovieStore.API.Models.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("MovieStore.API.Models.Director", b =>
@@ -173,6 +245,8 @@ namespace MovieStore.API.Migrations
                     b.Navigation("Actors");
 
                     b.Navigation("Directors");
+
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

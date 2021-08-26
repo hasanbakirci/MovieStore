@@ -12,6 +12,8 @@ namespace MovieStore.API.Repository
         DbSet<FilmActor> FilmActors { get; init; }
         DbSet<Director> Directors { get; set; }
         DbSet<FilmDirector> FilmDirectors { get; set; }
+        DbSet<Customer> Customers {get;set;}
+        DbSet<Order> Orders {get;set;} 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
