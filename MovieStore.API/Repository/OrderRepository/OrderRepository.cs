@@ -41,7 +41,7 @@ namespace MovieStore.API.Repository.OrderRepository
             var film = _context.Films.Find(id);
             if(film is null)
                 throw new InvalidOperationException("Film bulunamadı");
-            return _context.Orders.Where(item => item.FilmId == id);
+            return _context.Orders.Include(i => i.Customer).Include(i => i.Film).Where(item => item.FilmId == id);
 
         }
 
@@ -50,7 +50,7 @@ namespace MovieStore.API.Repository.OrderRepository
             var customer = _context.Customers.Find(id);
             if(customer is null)
                 throw new InvalidOperationException("Customer bulunamadı");
-            return _context.Orders.Where(item => item.CustomerId == id);
+            return _context.Orders.Include(i => i.Customer).Include(i => i.Film).Where(item => item.CustomerId == id);
         }
     }
 }
