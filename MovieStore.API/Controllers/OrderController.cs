@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.OrderRequest;
@@ -33,8 +34,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> Create(CreateOrderRequest request){
-            await _orderService.Add(request);
-            return Ok();
+            try
+            {
+                CreateOrderRequestValidator validator = new CreateOrderRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _orderService.Add(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpGet("/Film/{id}")]
         public ActionResult<IEnumerable<OrderDto>> GetAllByFilmId(Guid id){

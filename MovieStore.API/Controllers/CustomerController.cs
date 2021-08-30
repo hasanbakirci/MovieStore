@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.CustomerRequest;
@@ -33,8 +34,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> Create(CreateCustomerRequest request){
-            await _customerService.Add(request);
-            return Ok();
+            try
+            {
+                CreateCustomerRequestValidator validator = new CreateCustomerRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _customerService.Add(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id){
@@ -43,8 +54,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id,UpdateCustomerRequest request){
-            await _customerService.Update(id,request);
-            return Ok();
+            try
+            {
+                UpdateCustomerRequestValidator validator = new UpdateCustomerRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _customerService.Update(id,request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

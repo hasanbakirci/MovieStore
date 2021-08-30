@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.FilmRequest;
@@ -35,8 +36,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> Create(CreateFilmRequest request){
-            await _filmService.Add(request);
-            return Ok();
+            try
+            {
+                CreateFilmRequestValidator validator = new CreateFilmRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _filmService.Add(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id){
@@ -45,8 +56,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, UpdateFilmRequest request){
-            await _filmService.Update(id,request);
-            return Ok();
+            try
+            {
+                UpdateFilmRequestValidator validator = new UpdateFilmRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _filmService.Update(id,request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpPost("/Actor")]
         public async Task<ActionResult> AddActor(Guid filmId,Guid actorId){

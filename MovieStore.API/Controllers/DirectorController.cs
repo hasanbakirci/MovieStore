@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Dtos;
 using MovieStore.API.Dtos.Request.DirectorRequest;
@@ -33,8 +34,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPost]
         public async Task<ActionResult> Create(CreateDirectorRequest request){
-            await _directorService.Add(request);
-            return Ok();
+            try
+            {
+                CreateDirectorRequestValidator validator = new CreateDirectorRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _directorService.Add(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id){
@@ -43,8 +54,18 @@ namespace MovieStore.API.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, UpdateDirectorRequest request){
-            await _directorService.Update(id,request);
-            return Ok();
+            try
+            {
+                UpdateDirectorRequestValidator validator = new UpdateDirectorRequestValidator();
+                validator.ValidateAndThrow(request);
+                await _directorService.Update(id,request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpGet("/FilmsOfDirector")]
         public ActionResult<IEnumerable<FilmsOfDirectorsDto>> GetAllFilmsOfDirector(Guid directorId){
