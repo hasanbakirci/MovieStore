@@ -1,60 +1,73 @@
-# Proje Yapısı
+ ## MovieStore Case
 
+ This project is a simple movie store project.
+ 
+ `dotnet ef migrations add migrationName`
 
-### 1.Bir filmin sahip olması gereken özellikleri şu şekildedir:
+ `dotnet ef database update`
 
-Film Adı,
-Film Yılı,
-Film Türü,
-Yönetmen,
-Oyuncular,
-Fiyat,
-Yönetmenler ve oyuncular ayrı tutulmalıdır. Bir oyuncu aynı zamanda yönetmen de olabilir, ama bunlar iki ayrı yapıdır.
-___
-### 2.Oyuncuların sahip olması gereken özellikler temelde şu şekildedir :
+ `dotnet watch run`
+ 
+ ##  Requirements
 
-İsim,
-Soyisim,
-Oynadığı filmler
-Bir filmde birden fazla oyuncu oynayabilir, bir oyuncunun da birden fazla filmi olabilir.
-___
-### 3.Yönetmenlerin sahip olması gereken özellikler temelde şu şekildedir:
+ - Postgresql
+ - .Net 5
 
-İsim,
-Soyisim,
-Yönettiği filmler
-___
-### 4.Uygulama içerisinde bir de Customer rolü olmalıdır. Özellikleri ise temelde şu şekildedir:
+ ## 3rd Party Libraries
 
-İsim,
-Soyisim,
-Satın aldığı filmler,
-Favori türler
-Müşterinin birden fazla favori film türü olabilir. Satın aldığı bir türü tekrar satın alabilir. Buraya bir kısıtlama koymaya gerek yok.
+- EntityFramework
+- FluentValidation
+- Automapper
+- Swagger
+## Endpoints
 ___
-### 5.Customer için bir login endpoint'i yaratılmalıdır. Yetkisiz kullanıcı uygulama içerisinden satın alma işlemi yapamamalı.
-___
-### 6.Müşterilerin satın aldıkları filmler siparişlerim gibi bir yapı içerisinde tutulmalıdır. Temel özellikleri ise şu şekilde olmalıdır:
+## Actors
+| Endpoint                | Desc                                                     |
+|-------------------------|----------------------------------------------------------|
+| GET  /Actors| Get actors
+| POST /Actors| Create actor 
+| DELETE  /Actors/uuidv4| Delete actor  
+| GET  /Actors/uuidv4| Get actor                             
+| PUT /Actors/uuidv4| Update actor        
+| GET  /FilmsOfActor| Get films of actor
 
-Satın alan müşteri,
-Satın alınan film,
-Fiyat,
-Satın alma tarihi
+## Customers
+| Endpoint                | Desc                                                     |
+|-------------------------|----------------------------------------------------------|
+| GET  /Customers| Get customers
+| POST /Customers| Create customer 
+| DELETE  /Customers/uuidv4| Delete customer  
+| GET  /Customers/uuidv4| Get customer                             
+| PUT /Customers/uuidv4| Update customer        
 
-___
-# Uygulama Gereksinimleri
-___
-### 1.Film Ekleme/Silme/Güncelleme/Listeleme
-___
-### 2.Müşteri Ekleme/Silme
-___
-### 3.Oyuncu Ekleme/Silme/Güncelleme/Listeleme
-___
-### 4.Yönetmen Ekleme/Silme/Güncelleme/Listeleme/
-___
-### 5.Film Satın Alma
-Müşteri istediği bir filmi uygulama üzerinden satın alabilir.
-___
-### 6.Müşteri bazlı satın alma verisinin listelenmesi. Satın alınan filmler daha sonra sistemden silinebilir. Bu sipariş datasını etkilememeli. Bu durumu sağlamak için film verileri hard olarajk silinmemelidir. Bir Aktif-Pasif özelliği ile yönetilebilir.
-___
-### 7.Film türleri uygulama çalıştırıldığından varsayılan olarak yaratılabilir. Servisler ile yönetilmesine gerek yoktur.
+## Directors
+| Endpoint                | Desc                                                     |
+|-------------------------|----------------------------------------------------------|
+| GET  /Directors| Get directors
+| POST /Directors| Create director 
+| DELETE  /Directors/uuidv4| Delete director  
+| GET  /Directors/uuidv4| Get director                             
+| PUT /Directors/uuidv4| Update director
+| GET /FilmsOfDirector| Get films of director 
+
+## Films
+| Endpoint                | Desc                                                     |
+|-------------------------|----------------------------------------------------------|
+| GET  /Films| Get films
+| POST /Films| Create film 
+| DELETE  /Films/uuidv4| Delete film  
+| GET  /Films/uuidv4| Get film                             
+| PUT /Films/uuidv4| Update film
+| POST /Actor| Add films of actor
+| GET  /Actor| Get films of actor
+| POST /Director| Add films of director
+| GET /Director| Get films of director
+
+## Orders
+| Endpoint                | Desc                                                     |
+|-------------------------|----------------------------------------------------------|
+| GET  /Orders| Get orders
+| POST /Orders| Create order  
+| GET  /Orders/uuidv4| Get order                             
+| GET /Film/uuidv4| Get orders by film
+| GET /Customer/uuidv4| Get orders by customer
